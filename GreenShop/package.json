@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "ethers": "^6.13.4",
+    "express": "^4.21.1",
+    "greenshop-api": "file:",
+    "joi": "^17.13.3",
+    "lodash": "^4.17.21"
+  },
+  "scripts": {
+    "start": "bun --hot run app.ts"
+  },
+  "name": "greenshop-api",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/express": "^5.0.0",
+    "@types/lodash": "^4.17.0",
+    "ethers-types": "^3.17.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

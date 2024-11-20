@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <meta
+    http-equiv="content-type"
+    content="text/html;charset=utf-8"
+  />
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="author" content="mironcoder" />
+    <meta name="email" content="mironcoder@gmail.com" />
+    <meta name="profile" content="https://themeforest.net/user/mironcoder" />
+    <meta name="template" content="greeny" />
+    <meta name="title" content="greeny - Ecommerce Food Store HTML Template" />
+    <meta
+      name="keywords"
+      content="organic, food, shop, ecommerce, store, html, bootstrap, template, agriculture, vegetables, products, farm, grocery, natural, online"
+    />
+    <title>Thế giới nông sản</title>
+<link rel="icon" href="/images/logo.png" />
+    <link rel="stylesheet" href="fonts/flaticon/flaticon.css" />
+    <link rel="stylesheet" href="fonts/icofont/icofont.min.css" />
+    <link rel="stylesheet" href="fonts/fontawesome/fontawesome.min.css" />
+    <link rel="stylesheet" href="vendor/venobox/venobox.min.css" />
+    <link rel="stylesheet" href="vendor/slickslider/slick.min.css" />
+    <link rel="stylesheet" href="vendor/niceselect/nice-select.min.css" />
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/product-details.css" />
+  </head>
+  <body>
+   
+    <!--************************************
+				Header Start
+		*************************************-->
+		<header th:replace="~{/web/fragments/header :: header}"></header>
+		<!--************************************
+				Header End
+		*************************************-->
+    
+    <section
+      class="single-banner inner-section"
+      style="background: url(images/single-banner.jpg) no-repeat center">
+      <div class="container">
+        <h2>Chi tiết sản phẩm</h2>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a th:href="@{/}">Trang chủ</a></li>
+        </ol>
+      </div>
+    </section>
+    
+    <section class="inner-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="details-gallery">
+              <div class="details-label-group">
+                <label class="details-label new">new</label>
+                <label class="details-label off">- [[${product.discount + '%'}]]</label>
+              </div>
+              <ul class="details-preview">
+                <li><img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product"/></li>
+              </ul>
+<!--               <ul class="details-thumb"> -->
+<!--                 <li> -->
+<!--                 	<img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product" /> -->
+<!--                 </li> -->
+<!--               </ul> -->
+            </div>
+          </div>
+          <div class="col-lg-6">
+            
+            <div class="details-content">
+				<div class="details-info-container">
+					<div class="left-info">
+						<h3 class="details-name">
+							<a href="#">[[${product.productName}]]</a>
+						</h3>
+						<div class="details-meta">
+							<p>Mã sản phẩm:<span>[[${product.productId}]]</span></p>
+						</div>
+                        <div class="details-meta">
+                            <p>Transaction hash:
+                                <a id="txnLink" th:href="|https://sepolia.etherscan.io/tx/${product.txnHash}#eventlog|">
+                                    <span id="txnHash">[[${product.txnHash}]]</span>
+                            </a>
+                        </div>
+						<div class="details-meta">
+							<p>Thể loại:<a href="#">[[${product.category.categoryName}]]</a></p>
+						</div>
+						<div class="details-meta">
+							<p>Số lượng hàng:<a href="#">[[${product.quantity}]]</a></p>
+						</div>
+						<div class="details-meta">
+							<p>Ngày sản xuất:<a href="#">[[${product.mfgDate}]]</a></p>
+						</div>
+						<div class="details-meta">
+							<p>Ngày hết hạn:<a href="#">[[${product.expDate}]]</a></p>
+						</div>
+						<div class="details-meta">
+							<p>Nhà sản xuất:<a href="#">[[${product.producer}]]</a></p>
+						</div>
+					</div>
+				</div>
+              <div class="details-rating">
+                <i class="active icofont-star"></i
+                ><i class="active icofont-star"></i
+                ><i class="active icofont-star"></i
+                ><i class="active icofont-star"></i>
+                <i class="icofont-star"></i>
+                
+              </div>
+              <h3 class="details-price">
+                <del>[[${#numbers.formatDecimal(product.price, 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]</del>
+                <span>[[${#numbers.formatDecimal(product.price - (product.price * product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]<small>/kg</small></span>
+              </h3>
+              <p class="details-desc">
+                [[${product.description}]]
+              </p>
+              <div class="details-list-group">
+                <label class="details-list-title">Xem thêm:</label>
+                <ul class="details-tag-list">
+                  <li th:each="item : ${categoryList}">
+                  	<a th:href="@{/productByCategory(id=${item.categoryId})}">[[${item.categoryName}]]</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="details-list-group">
+                <label class="details-list-title">Share:</label>
+                <ul class="details-share-list">
+                  <li>
+                    <a href="javascript:void(0);" class="icofont-facebook" title="Facebook"></a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" class="icofont-twitter" title="Twitter"></a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" class="icofont-linkedin" title="Linkedin"></a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" class="icofont-instagram" title="Instagram"></a>
+                  </li>
+                </ul>
+              </div>
+
+				 
+				 <th:block th:if="${product.quantity != 0}">
+				  <div class="details-add-group">
+	                <a class="product-add1" style="background-color: #119744" title="Thêm giỏ hàng" th:if="${product.quantity > 0}" th:href="@{/addToCart(productId=${product.productId})}">
+	                  <i style="color: white" class="fas fa-shopping-basket"></i>
+	                  <span style="color: white">Thêm giỏ hàng</span>
+	                </a>              
+	              </div>          	                               
+				 </th:block>
+				 
+				 <th:block th:if="${product.quantity == 0}">
+				   <div class="details-add-group">
+	                <a class="product-add1" style="background-color: #cacaca">
+	                  <span style="color: white">Hết hàng</span>
+	                </a>              
+	              </div>   	       	                               
+				 </th:block>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="inner-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="product-details-frame">
+              <h3 class="frame-title">Mô tả sản phẩm</h3>
+              <div class="tab-descrip">
+                <p>
+                  [[${product.description}]]
+                </p>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+
+
+	<!--************************************
+				Footer Start
+		*************************************-->
+		<footer th:replace="~{/web/fragments/footer :: footer}"></footer>
+				
+		<!--************************************
+				Footer End
+		*************************************-->
+    
+    
+    <script src="vendor/bootstrap/jquery-1.12.4.min.js"></script>
+    <script src="vendor/bootstrap/popper.min.js"></script>
+    <script src="vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="vendor/countdown/countdown.min.js"></script>
+    <script src="vendor/niceselect/nice-select.min.js"></script>
+    <script src="vendor/slickslider/slick.min.js"></script>
+    <script src="vendor/venobox/venobox.min.js"></script>
+    <script src="js/nice-select.js"></script>
+    <script src="js/countdown.js"></script>
+    <script src="js/accordion.js"></script>
+    <script src="js/venobox.js"></script>
+    <script src="js/slick.js"></script>
+    <script src="js/main.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        // Get the full hash from the template and shorten it
+        const fullHash = '[[${product.txnHash}]]';
+        const shortenedHash = `${fullHash.slice(0, 6)}...${fullHash.slice(-4)}`; // E.g., 0x1234...abcd
+
+        // Update the displayed hash text
+        document.getElementById('txnHash').textContent = shortenedHash;
+    </script>
+  </body>
+</html>
