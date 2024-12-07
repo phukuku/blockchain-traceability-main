@@ -52,4 +52,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
 	Optional<Product> findByTxnHash(String hash);
 
+	Optional<Product> findById(long id);
+
 }

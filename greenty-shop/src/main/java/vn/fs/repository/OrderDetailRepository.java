@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import vn.fs.entities.OrderDetail;
+import vn.fs.entities.Product;
 
 
 @Repository
@@ -90,4 +91,5 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> 
     		+ "GROUP BY c.user_id;", nativeQuery = true)
     public List<Object[]> reportCustommer();
 
+	long countByProduct(Product pr);
 }

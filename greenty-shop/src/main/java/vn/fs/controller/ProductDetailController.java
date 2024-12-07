@@ -13,6 +13,7 @@ import vn.fs.commom.CommomDataService;
 import vn.fs.entities.Product;
 import vn.fs.entities.User;
 import vn.fs.repository.ProductRepository;
+import vn.fs.service.ProductRecommendationService;
 
 
 @Controller
@@ -27,6 +28,9 @@ public class ProductDetailController extends CommomController{
 	@Autowired
 	CommomDataService commomDataService;
 
+	@Autowired
+	ProductRecommendationService productRecommendationService;
+
 	@GetMapping(value = "productDetail")
 	public String productDetail(@RequestParam("id") Long id, Model model, User user) {
 
@@ -35,7 +39,8 @@ public class ProductDetailController extends CommomController{
 		model.addAttribute("baseUrl", baseUrl);
 
 		commomDataService.commonData(model, user);
-		listProductByCategory10(model, product.getCategory().getCategoryId());
+		List<Product> recommendPro = productRecommendationService.getRecommendedProducts(id);
+		model.addAttribute("recommendProduct", recommendPro);
 
 		return "web/productDetail";
 	}
@@ -53,8 +58,8 @@ public class ProductDetailController extends CommomController{
 	}
 	
 	// Gợi ý top 10 sản phẩm cùng loại
-	public void listProductByCategory10(Model model, Long categoryId) {
-		List<Product> products = productRepository.listProductByCategory10(categoryId);
-		model.addAttribute("productByCategory", products);
-	}
+//	public void listProductByCategory10(Model model, Long categoryId) {
+//		List<Product> products = productRepository.listProductByCategory10(categoryId);
+//		model.addAttribute("productByCategory", products);
+//	}
 }

@@ -202,7 +202,7 @@
 			<div class="row">
 				<div class="col">
 					<ul class="new-slider slider-arrow">
-						<li th:each="item : ${productByCategory}">
+						<li th:each="item : ${recommendProduct}">
 							<div class="product-card">
 								<div class="product-media">
 									<div class="product-label">
@@ -228,7 +228,7 @@
 									
 									<a class="product-image"
 										href="javascript:void(0);">
-										<img th:src="@{'/loadImage?imageName='+${item.productImage}}" alt="product" />
+										<img th:src="@{'/loadImage?imageName='+${item.productImage}}" alt="product" style="width: 222px; height: 222px; object-fit: cover;"/>
 									</a>
 									<div class="product-widget">
 										<th:block href="/login" th:if="${user.email == null}">
