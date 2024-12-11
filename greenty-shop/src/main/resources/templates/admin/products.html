@@ -83,7 +83,7 @@
 											<div class="modal-header no-bd">
 												<h5 class="modal-title">
 													<span class="fw-mediumbold" style="text-decoration: underline; color: black;">
-													thêm mới sản phẩm</span> 
+													thêm mới sản phẩm</span>
 												</h5>
 												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 													<span aria-hidden="true">&times;</span>
@@ -98,7 +98,7 @@
 																<input th:field="*{productName}" id="productName" type="text" class="form-control" placeholder="Tên sản phẩm..." required>
 															</div>
 														</div>
-														<div class="col-md-6 pr-0">
+														<div class="col-md-6">
 															<div class="form-group form-group-default">
 																<label>Thể loại</label>
 																<select class="form-control"
@@ -111,44 +111,53 @@
 																</select>
 															</div>
 														</div>
-														
-														<div class="col-md-6 pr-0">
+
+														<div class="col-md-6">
 															<div class="form-group form-group-default">
 																<label>Đơn giá</label>
 																<input th:field="*{price}" id="price" min = 1 type="number" class="form-control" placeholder="Đơn giá" required>
 															</div>
 														</div>
-														<div class="col-md-6 pr-0">
+														<div class="col-md-6">
 															<div class="form-group form-group-default">
 																<label>Số lượng</label>
 																<input th:field="*{quantity}" id="quantity" min = 1 type="number" class="form-control" placeholder="Số lượng" required>
 															</div>
 														</div>
-														<div class="col-md-6 pr-0">
+														<div class="col-md-6">
 															<div class="form-group form-group-default">
 																<label>Giảm giá</label>
 																<input th:field="*{discount}" id="discount" min = 0 type="number" class="form-control" placeholder="Giảm giá">
 															</div>
 														</div>
-														<div class="col-md-6 pr-0">
+														<div class="col-md-6" style="display:none">
 															<div class="form-group form-group-default">
 																<label>Ngày thêm</label>
-																<input th:field="*{enteredDate}" id="enteredDate" type="date" class="form-control" placeholder="Ngày thêm" >
+																<input id="enteredDate" type="date" class="form-control" placeholder="Ngày thêm">
 															</div>
 														</div>
-														<div class="col-md-6 pr-0">
+
+														<script>
+															// Thiết lập giá trị mặc định là ngày hôm nay
+															document.addEventListener('DOMContentLoaded', function() {
+																const today = new Date().toISOString().split('T')[0]; // Lấy ngày hiện tại (định dạng YYYY-MM-DD)
+																document.getElementById('enteredDate').value = today;
+															});
+														</script>
+
+														<div class="col-md-6">
 															<div class="form-group form-group-default">
 																<label>Ngày sản xuất</label>
 																<input th:field="*{mfgDate}" id="mfgDate" type="date" class="form-control" placeholder="Ngày sản xuất" required>
 															</div>
 														</div>
-														<div class="col-md-6 pr-0">
+														<div class="col-md-6">
 															<div class="form-group form-group-default">
 																<label>Ngày hết hạn</label>
 																<input th:field="*{expDate}" id="expDate" type="date" class="form-control" placeholder="Ngày hết hạn" required>
 															</div>
 														</div>
-														<div class="col-md-6 pr-0">
+														<div class="col-md-6">
 															<div class="form-group form-group-default">
 																<label>Nhà sản xuất</label>
 																<input th:field="*{producer}" id="producer" type="text" class="form-control" placeholder="Nhà sản xuất" required>
@@ -163,9 +172,10 @@
 														<div class="col-sm-12">
 															<div class="form-group form-group-default">
 																<label>Mô tả sản phẩm</label>
-																<textarea th:field="*{description}" id="description" class="form-control" placeholder="Mô tả sản phẩm" ></textarea>
+																<textarea th:field="*{description}" id="description" class="form-control" placeholder="Mô tả sản phẩm" style="height: 100px !important;"></textarea>
 															</div>
 														</div>
+
 													</div>
 													<div class="modal-footer no-bd">
 														<button type="submit" id="" class="btn btn-primary">Thêm mới</button>

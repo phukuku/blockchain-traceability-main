@@ -73,6 +73,7 @@ export const getProductById = async (productId: number) => {
   try {
     const product = await productRegistryContract.getProduct(productId);
     return normalizeProduct(product);
+    
   } catch (error: any) {
     return {
       success: false,

@@ -104,7 +104,7 @@
                 <span>[[${#numbers.formatDecimal(product.price - (product.price * product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]<small>/kg</small></span>
               </h3>
               <p class="details-desc">
-                [[${product.description}]]
+				<p th:text="${product.description}" style="white-space: pre-line;"></p>
               </p>
               <div class="details-list-group">
                 <label class="details-list-title">Xem thêm:</label>
@@ -180,11 +180,10 @@
               <h3 class="frame-title">Mô tả sản phẩm</h3>
               <div class="tab-descrip">
                 <p>
-                  [[${product.description}]]
-                </p>
+				  <p th:text="${product.description}" style="white-space: pre-line;"></p>                </p>
               </div>
             </div>
-            
+
           </div>
         </div>
       </div>
@@ -393,7 +392,7 @@
 		<!--************************************
 				Footer End
 		*************************************-->
-    
+
     
     <script src="vendor/bootstrap/jquery-1.12.4.min.js"></script>
     <script src="vendor/bootstrap/popper.min.js"></script>

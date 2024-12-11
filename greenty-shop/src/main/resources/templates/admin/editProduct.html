@@ -77,21 +77,26 @@
 						             <form th:action="@{/admin/updateProduct}" th:object="${product}" method="post" enctype="multipart/form-data">
 										<div class="row">
 										 	<div class="col-sm-12">
+												<div class="form-group form-group-default" style="background: #e8e8e8 !important">
 							                       <label for="productId">ID <a style="color: red"><strong>*</strong></a></label>
 							                       <input type="hidden">
 							                       <input type="text" th:field="*{productId}" class="form-control" name="productId" id="productId" aria-describedby="categoryhelpId" placeholder="Mã sản phẩm ?" readonly="readonly">
-							               </div>
+							                    </div>
+											</div>
 											<div class="col-sm-12">
-												<div class="form-group form-group-default">
+												<div class="form-group form-group-default" style="background: #e8e8e8 !important">
 													<label>Tên sản phẩm</label>
-													<input th:field="*{productName}" id="productName" type="text" class="form-control" placeholder="Tên sản phẩm...">
+													<input type="hidden">
+
+													<input th:field="*{productName}" id="productName" type="text" class="form-control" placeholder="Tên sản phẩm..."readonly="readonly">
 												</div>
 											</div>
-											<div class="col-md-6 pr-0">
-												<div class="form-group form-group-default">
+											<div class="col-md-6">
+												<div class="form-group form-group-default" style="background: #e8e8e8 !important">
 													<label>Thể loại</label>
+													<input type="hidden">
 													<select class="form-control"
-														 name="category" th:field="*{category.categoryId}" id="categoryId">
+														 name="category" th:field="*{category.categoryId}" id="categoryId" readonly="readonly">
 														<option th:each="item : ${categoryList}"
 		  													th:value="${item.categoryId}" th:text="${item.categoryName}"
 															th:selected="${item.categoryId == product.category.categoryId}">
@@ -100,53 +105,61 @@
 													</select>
 												</div>
 											</div>
-											<div class="col-md-6 pr-0">
+											<div class="col-md-6">
 												<div class="form-group form-group-default">
 													<label>Đơn giá</label>
 													<input th:field="*{price}" id="price" min = 0 type="number" class="form-control" placeholder="Đơn giá">
 												</div>
 											</div>
 
-
-
-											<div class="col-md-6 pr-0" style="display: none;">
-												<div class="form-group form-group-default">
-													<input th:field="*{expDate}" id="expDate" class="form-control" placeholder="Đơn giá">
+											<div class="col-md-6" >
+												<div class="form-group form-group-default" style="background: #e8e8e8 !important">
+													<label>Ngày sản xuất </label>
+													<input type="hidden">
+													<input th:field="*{mfgDate}" id="mfgDate" class="form-control" readonly="readonly">
 												</div>
 											</div>
 
-											<div class="col-md-6 pr-0" style="display: none;">
-												<div class="form-group form-group-default">
-													<input th:field="*{mfgDate}" id="mfgDate" class="form-control" placeholder="Đơn giá">
-												</div>
-											</div>
-
-											<div class="col-md-6 pr-0" style="display: none;">
-												<div class="form-group form-group-default">
-													<input th:field="*{producer}" id="producer" class="form-control" placeholder="Đơn giá">
-												</div>
-											</div>
-
-											<div class="col-md-6 pr-0" style="display: none;">
-												<div class="form-group form-group-default">
-													<input th:field="*{txnHash}" id="txnHash" class="form-control">
+<!--											style="display: none;"-->
+											<div class="col-md-6" >
+												<div class="form-group form-group-default" style="background: #e8e8e8 !important">
+													<label>Ngày hết hạn</label>
+													<input type="hidden">
+													<input th:field="*{expDate}" id="expDate" class="form-control" readonly="readonly">
 												</div>
 											</div>
 
 
-											<div class="col-md-6 pr-0">
+											<div class="col-md-6" >
+												<div class="form-group form-group-default" style="background: #e8e8e8 !important">
+													<label>Nhà sản xuất</label>
+													<input type="hidden">
+													<input th:field="*{producer}" id="producer" class="form-control" readonly="readonly">
+												</div>
+											</div>
+
+											<div class="col-md-6" >
+												<div class="form-group form-group-default" style="background: #e8e8e8 !important">
+													<label>Hash</label>
+													<input type="hidden">
+													<input th:field="*{txnHash}" id="txnHash" class="form-control" readonly="readonly" >
+												</div>
+											</div>
+
+
+											<div class="col-md-6">
 												<div class="form-group form-group-default">
 													<label>Số lượng</label>
 													<input th:field="*{quantity}" id="quantity" min = 0 type="number" class="form-control" placeholder="Số lượng">
 												</div>
 											</div>
-											<div class="col-md-6 pr-0">
+											<div class="col-md-6">
 												<div class="form-group form-group-default">
 													<label>Giảm giá</label>
 													<input th:field="*{discount}" id="discount" min = 0 type="number" class="form-control" placeholder="giảm giá">
 												</div>
 											</div>
-											<div class="col-md-6 pr-0">
+											<div class="col-md-6">
 												<div class="form-group form-group-default">
 													<label>Ngày thêm</label>
 													<input th:field="*{enteredDate}" id="enteredDate" type="date" class="form-control" placeholder="ngày thêm">
@@ -158,6 +171,7 @@
 													<input type="file" id="productImage" name="file" class="form-control">
 												</div>
 											</div>
+
 											<div class="col-sm-12">
 												<div class="form-group form-group-default">
 													<label>Mô tả sản phẩm</label>

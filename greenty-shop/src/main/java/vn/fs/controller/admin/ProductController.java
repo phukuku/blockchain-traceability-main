@@ -3,6 +3,7 @@ package vn.fs.controller.admin;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -226,4 +227,42 @@ public class ProductController {
 			return null;
 		}
 	}
+
+
+//	private String uploadProductToBlockChain(Product product) {
+//		try {
+//			// Chuẩn hóa và mã hóa chuỗi thành UTF-8
+//			String productName = new String(product.getProductName().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+//			String producer = new String(product.getProducer().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+//
+//			String formattedData = String.join("\n",
+//					"\nId: " + product.getProductId().intValue(),
+//					"Name: " + productName,
+//					"Producer: " + producer,
+//					"Categories id: " + product.getCategory().getCategoryId(),
+//					"Production date: " + (Instant.now().toEpochMilli() / 1000)+"\n"
+//			);
+//
+//			// Loại bỏ các ký tự không hợp lệ
+//			String cleanData = formattedData.replaceAll("[^\\x20-\\x7E\\p{L}\\p{N}\\s\\n]", "");
+//
+//			ProductRequestDto productRequestDto = ProductRequestDto.builder()
+//					.productId(product.getProductId().intValue())
+//					.productName(cleanData)
+//					.manufacturer(producer)
+//					.categoryId(product.getCategory().getCategoryId().toString())
+//					.productionDate(Instant.now().toEpochMilli() / 1000)
+//					.build();
+//
+//			return Optional
+//					.ofNullable(smartContractClient.uploadProductDataToBlockChain(productRequestDto))
+//					.map(ResponseEntity::getBody)
+//					.map(TransactionHashResponse::getHash)
+//					.orElse("");
+//		} catch (Exception exception) {
+//			exception.printStackTrace();
+//			return null;
+//		}
+//	}
+
 }

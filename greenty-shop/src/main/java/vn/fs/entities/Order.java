@@ -37,7 +37,9 @@ public class Order implements Serializable {
 	private String address;
 	private String phone;
 	private int status;
-
+	private String province ;
+	private String district;
+	private String ward;
 	@OneToMany(mappedBy = "order")
 	private List<OrderDetail> orderDetails;
 

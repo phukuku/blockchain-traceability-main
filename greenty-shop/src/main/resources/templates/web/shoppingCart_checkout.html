@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <meta
-    http-equiv="content-type"
-    content="text/html;charset=utf-8"
-  />
-  <head>
+        http-equiv="content-type"
+        content="text/html;charset=utf-8"
+/>
+<head>
     <meta charset="UTF-8" />
     <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <meta name="author" content="mironcoder" />
     <meta name="email" content="mironcoder@gmail.com" />
@@ -16,11 +16,11 @@
     <meta name="template" content="greeny" />
     <meta name="title" content="greeny - Ecommerce Food Store HTML Template" />
     <meta
-      name="keywords"
-      content="organic, food, shop, ecommerce, store, html, bootstrap, template, agriculture, vegetables, products, farm, grocery, natural, online"
+            name="keywords"
+            content="organic, food, shop, ecommerce, store, html, bootstrap, template, agriculture, vegetables, products, farm, grocery, natural, online"
     />
-   <title>Thế giới nông sản</title>
-<link rel="icon" href="/images/logo.png" />
+    <title>Thế giới nông sản</title>
+    <link rel="icon" href="/images/logo.png" />
     <link rel="stylesheet" href="fonts/flaticon/flaticon.css" />
     <link rel="stylesheet" href="fonts/icofont/icofont.min.css" />
     <link rel="stylesheet" href="fonts/fontawesome/fontawesome.min.css" />
@@ -30,489 +30,648 @@
     <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/checkout.css" />
-  </head>
-  <body>
-    
-    <!--************************************
-				Header Start
-		*************************************-->
-		<header th:replace="~{/web/fragments/header :: header}"></header>
-		<!--************************************
-				Header End
-		*************************************-->
+</head>
+<body>
+
+<!--************************************
+            Header Start
+    *************************************-->
+<header th:replace="~{/web/fragments/header :: header}"></header>
+<!--************************************
+        Header End
+*************************************-->
 <style>
+    .form-row {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 15px; /* Khoảng cách giữa các dropdown */
+    }
 
-.quantity-input {
-    text-align: center;
-    width: 50px;
-}
-/* Ẩn mũi tên của input có type="number" */
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
+    .form-group {
+        flex: 1; /* Đảm bảo các dropdown chia đều không gian */
+    }
 
-input[type="number"] {
-    -moz-appearance: textfield; /* Ẩn mũi tên trên Firefox */
-}
+    .quantity-input {
+        text-align: center;
+        width: 20px;
+    }
+    /* Ẩn mũi tên của input có type="number" */
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type="number"] {
+        -moz-appearance: textfield; /* Ẩn mũi tên trên Firefox */
+    }
 </style>
-    <section
-      class="inner-section single-banner"
-      style="background: url(images/single-banner.jpg) no-repeat center">
-      <div class="container">
+<section
+        class="inner-section single-banner"
+        style="background: url(images/single-banner.jpg) no-repeat center">
+    <div class="container">
         <h2>Thông tin đơn hàng</h2>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a th:href="@{/}">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/}">Trang chủ</a></li>
         </ol>
-      </div>
-    </section>
-    <section class="inner-section checkout-part">
-      <div class="container">
+    </div>
+</section>
+<section class="inner-section checkout-part">
+    <div class="container">
         <div class="row">
-        <!--   <div class="col-lg-12">
-            <div class="alert-info">
-              <p>
-                Phản hồi khách hàng? <a href="javascript:void(0);">Đăng nhập</a>
-              </p>
-            </div>
-          </div>-->
-          <div class="col-lg-12">
-            <div class="account-card">
-              <div class="account-title"><h4>Đơn Đặt Hàng Của Bạn</h4></div>
-              <div th:unless="${totalCartItems!=0}" class="text-center">
-					<h3 style="color: #119744" class="mt-5">Hiện tại bạn chưa có sản phẩm nào trong giỏ hàng!</h3>
-					<h4 style="color: #119744">Hãy mua sắm đi nào!</h4>
-					<a th:href="@{/products}" style="text-decoration: underline;">Click tại đây!</a>
-				</div>
-              <div class="account-content">
-                <div class="table-scroll">
-                  <table class="table-list" th:if="${totalCartItems!=0}">
-                    <thead>
-                      <tr>
-                        <th scope="col">STT</th>
-                        <th scope="col">Sản phẩm</th>
-                        <th scope="col">Tên sản phẩm</th>
-<!--                         <th scope="col">Đơn giá</th> -->
-                        <th scope="col">Thể loại</th>
-                        <th scope="col">Số lượng</th>
-                         <th scope="col">Đơn giá</th>
-						<th scope="col">Tổng tiền</th>
-                        <th scope="col">action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    
-                      <tr th:each="item,State : ${cartItems}">
-                        <td class="table-serial"><h6>[[${State.index + 1}]]</h6></td>
-                        <td class="table-image">
-                          <img  th:src="@{'/loadImage?imageName='+${item.product.productImage}}" alt="product" />
-                        </td>
-                        <td class="table-name"><h6>[[${item.product.productName}]]</h6></td>
-<!--                         <td class="table-price"> -->
-<!--                           <h6>[[${#numbers.formatDecimal(item.product.price - (item.product.price * item.product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')} +' đ']]<small>/kg</small></h6> -->
-<!--                         </td> -->
-                        <td class="table-brand"><h6>[[${item.product.category.categoryName}]]</h6></td>
-
-                          <td class="table-quantity">
-                              <div class="input-group">
-                                  <!-- Nút trừ số lượng -->
-                                  <button class="decrease-quantity"
-                                          th:onclick="'decreaseQuantity(\'' + ${item.product.productId} + '\', this)'">-</button>
-
-                                  <!-- Input số lượng -->
-                                  <input type="number" class="quantity-input"
-                                         th:value="${item.quantity}"
-                                         th:data-product="${item.product.productId}"
-                                         th:data-stock="${item.product.quantity}"
-                                         min="1"
-
-                                         oninput="validateQuantity(this); updatePrice1(this)"
-                                         onchange="updateQuantity(this)" />
-
-                                  <!-- Nút cộng số lượng -->
-                                  <button class="increase-quantity"
-                                          th:onclick="'increaseQuantity(\'' + ${item.product.productId} + '\', this)'">+</button>
-                              </div>
-                          </td>
-
-
-
-                          <td class="table-price">
-							    <h6 th:data-price="${item.product.productId}" th:price="${item.product.price - (item.product.price * item.product.discount/100)}">[[${#numbers.formatDecimal(item.product.price - (item.product.price * item.product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')} +' đ']]/kg</h6>
-							</td>
-							<td class="table-total" th:data-total="${item.product.productId}">
-							    <h6>[[${#numbers.formatDecimal(item.quantity * (item.product.price - (item.product.price * item.product.discount/100)), 1, 'DEFAULT', 0, 'DEFAULT')} +' đ']]</h6>
-							</td>
-                        <td class="table-action">
-                          <a
-                            class="view"
-                            th:href="@{/productDetail(id=${item.product.productId})}"
-                            title="Chi tiết sản phẩm">
-                            <i class="fas fa-eye"></i>
-                            </a>
-                            
-                            <a class="trash" href="javascript:void(0);" title="Xóa sản phẩm" th:data-id="${item.product.productId}" th:data-name="${item.product.productName}"
-										onclick="showConfigModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))">
-                            	<i class="icofont-trash"></i>
-                            </a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+            <!--   <div class="col-lg-12">
+                <div class="alert-info">
+                  <p>
+                    Phản hồi khách hàng? <a href="javascript:void(0);">Đăng nhập</a>
+                  </p>
                 </div>
-                <th:block th:if="${totalCartItems!=0}">
-                <div class="chekout-coupon">
-                  <h4>Tổng tiền thanh toán</h4>
+              </div>-->
+            <div class="col-lg-12">
+                <div class="account-card">
+                    <div class="account-title"><h4>Đơn Đặt Hàng Của Bạn</h4></div>
+                    <div th:unless="${totalCartItems!=0}" class="text-center">
+                        <h3 style="color: #119744" class="mt-5">Hiện tại bạn chưa có sản phẩm nào trong giỏ hàng!</h3>
+                        <h4 style="color: #119744">Hãy mua sắm đi nào!</h4>
+                        <a th:href="@{/products}" style="text-decoration: underline;">Click tại đây!</a>
+                    </div>
+                    <div class="account-content">
+                        <div class="table-scroll">
+                            <table class="table-list" th:if="${totalCartItems!=0}">
+                                <thead>
+                                <tr>
+                                    <th scope="col">STT</th>
+                                    <th scope="col">Sản phẩm</th>
+                                    <th scope="col">Tên sản phẩm</th>
+                                    <!--                         <th scope="col">Đơn giá</th> -->
+                                    <th scope="col">Thể loại</th>
+                                    <th scope="col">&nbsp;&nbsp;&nbsp;&nbsp;Số lượng&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                    <th scope="col">Đơn giá</th>
+                                    <th scope="col">Tổng tiền</th>
+                                    <th scope="col">action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr th:each="item,State : ${cartItems}">
+                                    <td class="table-serial"><h6>[[${State.index + 1}]]</h6></td>
+                                    <td class="table-image">
+                                        <img  th:src="@{'/loadImage?imageName='+${item.product.productImage}}" alt="product" />
+                                    </td>
+                                    <td class="table-name"><h6>[[${item.product.productName}]]</h6></td>
+                                    <!--                         <td class="table-price"> -->
+                                    <!--                           <h6>[[${#numbers.formatDecimal(item.product.price - (item.product.price * item.product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')} +' đ']]<small>/kg</small></h6> -->
+                                    <!--                         </td> -->
+                                    <td class="table-brand"><h6>[[${item.product.category.categoryName}]]</h6></td>
+
+                                    <td class="table-quantity">
+                                        <div class="input-group">
+                                            <!-- Nút trừ số lượng -->
+                                            <button class="decrease-quantity"
+                                                    th:onclick="'decreaseQuantity(\'' + ${item.product.productId} + '\', this)'">-</button>
+
+                                            <!-- Input số lượng -->
+                                            <input type="number" class="quantity-input"
+                                                   th:value="${item.quantity}"
+                                                   th:data-product="${item.product.productId}"
+                                                   th:data-stock="${item.product.quantity}"
+                                                   min="1"
+
+                                                   oninput="validateQuantity(this); updatePrice1(this)"
+                                                   onchange="updateQuantity(this)" />
+
+                                            <!-- Nút cộng số lượng -->
+                                            <button class="increase-quantity"
+                                                    th:onclick="'increaseQuantity(\'' + ${item.product.productId} + '\', this)'">+</button>
+                                        </div>
+                                    </td>
+
+
+
+                                    <td class="table-price">
+                                        <h6 th:data-price="${item.product.productId}" th:price="${item.product.price - (item.product.price * item.product.discount/100)}">[[${#numbers.formatDecimal(item.product.price - (item.product.price * item.product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')} +' đ']]/kg</h6>
+                                    </td>
+                                    <td class="table-total" th:data-total="${item.product.productId}">
+                                        <h6>[[${#numbers.formatDecimal(item.quantity * (item.product.price - (item.product.price * item.product.discount/100)), 1, 'DEFAULT', 0, 'DEFAULT')} +' đ']]</h6>
+                                    </td>
+                                    <td class="table-action">
+                                        <a
+                                                class="view"
+                                                th:href="@{/productDetail(id=${item.product.productId})}"
+                                                title="Chi tiết sản phẩm">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+
+                                        <a class="trash" href="javascript:void(0);" title="Xóa sản phẩm" th:data-id="${item.product.productId}" th:data-name="${item.product.productName}"
+                                           onclick="showConfigModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))">
+                                            <i class="icofont-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <th:block th:if="${totalCartItems!=0}">
+                            <div class="chekout-coupon">
+                                <h4>Tổng tiền thanh toán</h4>
+                            </div>
+                            <!--                 <div class="checkout-charge"> -->
+                            <!--                   <ul> -->
+                            <!--                     <li> -->
+                            <!--                       <span>Tổng tiền thanh toán<small>(Incl. VAT)</small></span> -->
+                            <!--                       <span>[[${#numbers.formatDecimal(totalPrice, 1, 'DEFAULT', 0, 'DEFAULT')}+ ' đ']]</span> -->
+                            <!--                     </li> -->
+                            <!--                   </ul> -->
+                            <!--                 </div> -->
+                            <div class="checkout-charge">
+                                <ul>
+                                    <li>
+                                        <span>Tổng tiền thanh toán<small>(Incl. VAT)</small></span>
+                                        <span id="totalPrice" >[[${#numbers.formatDecimal(totalPrice, 1, 'DEFAULT', 0, 'DEFAULT')}+ ' đ']]</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </th:block>
+                    </div>
                 </div>
-<!--                 <div class="checkout-charge"> -->
-<!--                   <ul> -->
-<!--                     <li> -->
-<!--                       <span>Tổng tiền thanh toán<small>(Incl. VAT)</small></span> -->
-<!--                       <span>[[${#numbers.formatDecimal(totalPrice, 1, 'DEFAULT', 0, 'DEFAULT')}+ ' đ']]</span> -->
-<!--                     </li> -->
-<!--                   </ul> -->
-<!--                 </div> -->
-						<div class="checkout-charge">
-						    <ul>
-						        <li>
-						            <span>Tổng tiền thanh toán<small>(Incl. VAT)</small></span>
-						            <span id="totalPrice" >[[${#numbers.formatDecimal(totalPrice, 1, 'DEFAULT', 0, 'DEFAULT')}+ ' đ']]</span>
-						        </li>
-						    </ul>
-						</div>
-                </th:block>
-              </div>
             </div>
-          </div>
 
 
-          
-    <script th:inline="javascript">
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+            <script th:inline="javascript">
 
-        function validateQuantity(inputElement) {
-            const enteredQuantity = parseInt(inputElement.value, 10); // Số lượng nhập vào
-            const stock = parseInt(inputElement.dataset.stock, 10);   // Số lượng tồn kho
-            const minQuantity = parseInt(inputElement.min, 10) || 1;  // Giá trị tối thiểu (mặc định là 1)
+                function validateQuantity(inputElement) {
+                    const enteredQuantity = parseInt(inputElement.value, 10); // Số lượng nhập vào
+                    const stock = parseInt(inputElement.dataset.stock, 10);   // Số lượng tồn kho
+                    const minQuantity = parseInt(inputElement.min, 10) || 1;  // Giá trị tối thiểu (mặc định là 1)
 
-            // Nếu giá trị nhập không hợp lệ hoặc nhỏ hơn min
-            if (isNaN(enteredQuantity) || enteredQuantity < minQuantity) {
-                alert(`Số lượng không được nhỏ hơn ${minQuantity}.`);
-                inputElement.value = minQuantity; // Đặt lại giá trị tối thiểu
-                return;
-            }
+                    // Nếu giá trị nhập không hợp lệ hoặc nhỏ hơn min
+                    if (isNaN(enteredQuantity) || enteredQuantity < minQuantity) {
+                        showAlert(`Số lượng không được nhỏ hơn ${minQuantity}.`, "error");
+                        inputElement.value = minQuantity; // Đặt lại giá trị tối thiểu
+                        return;
+                    }
 
-            // Nếu giá trị nhập vượt quá tồn kho
-            if (enteredQuantity > stock) {
-                alert(`Số lượng bạn nhập vượt quá tồn kho! Chỉ còn ${stock} sản phẩm.`);
-                inputElement.value = stock; // Đặt lại về giá trị tồn kho
-            }
-        }
-
-
-        function updateQuantity(productId, quantity) {
-        fetch('/updateQuantity?productId=' + productId + '&quantity=' + quantity, { method: 'PUT' })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Quantity updated successfully.');
-                } else {
-                    console.error('Failed to update quantity');
+                    // Nếu giá trị nhập vượt quá tồn kho
+                    if (enteredQuantity > stock) {
+                        showAlert(`Số lượng bạn nhập vượt quá tồn kho! Chỉ còn ${stock} sản phẩm.`, "error");
+                        inputElement.value = stock; // Đặt lại về giá trị tồn kho
+                    }
                 }
-            })
-            .catch(error => console.error('Error:', error));
-    }
 
-        function increaseQuantity(productId) {
-            var quantityInput = document.querySelector('[data-product="' + productId + '"]');
-            var currentQuantity = parseInt(quantityInput.value);
-            var stock = parseInt(quantityInput.dataset.stock);
-            if (currentQuantity < stock) {
-                quantityInput.value = currentQuantity + 1;
-                updateQuantity(productId, currentQuantity + 1);
-                updatePrice(productId);
-            } else {
-                // Hiển thị cảnh báo nếu số lượng vượt quá tồn kho
-                alert(`Không thể tăng số lượng vượt quá tồn kho. Chỉ còn ${stock} sản phẩm.`);
-            }
-        }
+                // Hàm hiển thị SweetAlert2
+                function showAlert(message, type) {
+                    Swal.fire({
+                        icon: type, // Loại thông báo: 'success', 'error', 'warning', 'info'
+                        title: type === 'error' ? 'Lỗi' : 'Thông báo',
+                        text: message, // Nội dung thông báo
+                        confirmButtonText: 'OK', // Nút xác nhận
+                        background: '#f4f4f9', // Màu nền của hộp thông báo
+                        color: '#333', // Màu chữ
+                        confirmButtonColor: '#3085d6', // Màu nút xác nhận
+                    });
+                }
+
+                function updateQuantity(productId, quantity) {
+                    fetch('/updateQuantity?productId=' + productId + '&quantity=' + quantity, { method: 'PUT' })
+                        .then(response => {
+                            if (response.ok) {
+                                console.log('Quantity updated successfully.');
+                            } else {
+                                console.error('Failed to update quantity');
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                }
+
+                function increaseQuantity(productId) {
+                    var quantityInput = document.querySelector('[data-product="' + productId + '"]');
+                    var currentQuantity = parseInt(quantityInput.value);
+                    var stock = parseInt(quantityInput.dataset.stock);
+                    if (currentQuantity < stock) {
+                        quantityInput.value = currentQuantity + 1;
+                        updateQuantity(productId, currentQuantity + 1);
+                        updatePrice(productId);
+                    } else {
+                        // Hiển thị cảnh báo nếu số lượng vượt quá tồn kho
+                        showAlert(`Số lượng bạn nhập vượt quá tồn kho! Chỉ còn ${stock} sản phẩm.`, "error");
+                    }
+                }
 
 
-        function decreaseQuantity(productId) {
-        var quantityInput = document.querySelector('[data-product="' + productId + '"]');
-        var currentQuantity = parseInt(quantityInput.value);
-        if (currentQuantity > 1) {
-            quantityInput.value = currentQuantity - 1;
-            updateQuantity(productId, currentQuantity - 1);
-        }
-        updatePrice(productId);
+                function decreaseQuantity(productId) {
+                    var quantityInput = document.querySelector('[data-product="' + productId + '"]');
+                    var currentQuantity = parseInt(quantityInput.value);
+                    if (currentQuantity > 1) {
+                        quantityInput.value = currentQuantity - 1;
+                        updateQuantity(productId, currentQuantity - 1);
+                    }
+                    updatePrice(productId);
 
-    }
-//cap nhật gi khi nhập ừ bàn phim
-        function updatePrice1(inputElement) {
-            const productId = inputElement.getAttribute('data-product');  // Lấy productId từ data attribute
-            const quantity = parseInt(inputElement.value);  // Lấy số lượng nhập vào
-            const pricePerUnit = document.querySelector('[data-price="' + productId + '"]');
-            const priceFinal = parseFloat(pricePerUnit.getAttribute('price'));  // Giá của 1 sản phẩm
-            const totalPriceElement = document.querySelector('[data-total="' + productId + '"]');
-            const totalPrice = quantity * priceFinal;
-            totalPriceElement.innerText = formatCurrency(totalPrice);
-            updateTotalPriceAllProducts();
-        }
+                }
+                //cap nhật gi khi nhập ừ bàn phim
+                function updatePrice1(inputElement) {
+                    const productId = inputElement.getAttribute('data-product');  // Lấy productId từ data attribute
+                    const quantity = parseInt(inputElement.value);  // Lấy số lượng nhập vào
+                    const pricePerUnit = document.querySelector('[data-price="' + productId + '"]');
+                    const priceFinal = parseFloat(pricePerUnit.getAttribute('price'));  // Giá của 1 sản phẩm
+                    const totalPriceElement = document.querySelector('[data-total="' + productId + '"]');
+                    const totalPrice = quantity * priceFinal;
+                    totalPriceElement.innerText = formatCurrency(totalPrice);
+                    updateTotalPriceAllProducts();
+                }
 
-    function updatePrice(productId) {
-        var quantityInput = document.querySelector('[data-product="' + productId + '"]');
-		console.log(quantityInput);
+                function updatePrice(productId) {
+                    var quantityInput = document.querySelector('[data-product="' + productId + '"]');
+                    console.log(quantityInput);
 
-        var quantity = parseInt(quantityInput.value);
-		console.log(quantity);
+                    var quantity = parseInt(quantityInput.value);
+                    console.log(quantity);
 
-        var pricePerUnit =document.querySelector('[data-price="' + productId + '"]');
-		console.log(pricePerUnit);
-        var priceFinal = parseFloat(pricePerUnit.getAttribute('price'));
-		console.log(priceFinal);
-        var totalPriceElement = document.querySelector('[data-total="' + productId + '"]');
+                    var pricePerUnit =document.querySelector('[data-price="' + productId + '"]');
+                    console.log(pricePerUnit);
+                    var priceFinal = parseFloat(pricePerUnit.getAttribute('price'));
+                    console.log(priceFinal);
+                    var totalPriceElement = document.querySelector('[data-total="' + productId + '"]');
 
-        var totalPrice = quantity * priceFinal;
-        totalPriceElement.innerText = formatCurrency(totalPrice);
-        updateTotalPriceAllProducts();
+                    var totalPrice = quantity * priceFinal;
+                    totalPriceElement.innerText = formatCurrency(totalPrice);
+                    updateTotalPriceAllProducts();
 
-    }
+                }
 
-    function formatCurrency(amount) {
-        return amount.toFixed(0).replace(/\d(?=(\d{3})+$)/g, '$&,') + ' đ';
-    }
-    
-    function updateTotalPriceAllProducts() {
-        var totalPrices = document.querySelectorAll('[data-total]');
-        totalPriceAllProducts = 0;
-        totalPrices.forEach(function(totalPriceElement) {
-            //var price = parseFloat(totalPriceElement.innerText.replace(' đ', '').replace(',', ''));
-            var priceString = totalPriceElement.innerText.replace(' đ', '').replace(',', '');
-			var price = parseInt(priceString.replace(/\D/g, ''));
-            totalPriceAllProducts += price;
+                function formatCurrency(amount) {
+                    return amount.toFixed(0).replace(/\d(?=(\d{3})+$)/g, '$&,') + ' đ';
+                }
 
-        });
-        document.getElementById('totalPrice').innerText = formatCurrency(totalPriceAllProducts);
-    }
+                function updateTotalPriceAllProducts() {
+                    var totalPrices = document.querySelectorAll('[data-total]');
+                    totalPriceAllProducts = 0;
+                    totalPrices.forEach(function(totalPriceElement) {
+                        //var price = parseFloat(totalPriceElement.innerText.replace(' đ', '').replace(',', ''));
+                        var priceString = totalPriceElement.innerText.replace(' đ', '').replace(',', '');
+                        var price = parseInt(priceString.replace(/\D/g, ''));
+                        totalPriceAllProducts += price;
 
-</script>
-          
+                    });
+                    document.getElementById('totalPrice').innerText = formatCurrency(totalPriceAllProducts);
+                }
 
-          <div class="col-lg-12" th:if="${totalCartItems!=0}">
-            <div class="account-card mb-0">
-              
-              <div class="account-content">
-                    <form class="user-form row" th:action="@{/checkout}" th:object="${order}" method="post">
-                       <div class="col-lg-8">
-	                       <div class="account-title">
-			                	<h4>Thông tin nhận hàng</h4>
-			              </div>
-                        <div class="form-group">
-                            <input
-                                type="email"
-                                th:value="${user.email}"
-                                class="form-control"
-                                placeholder="Email"
-                                readonly="readonly"
-                            />
-                        </div>
-                      
-                        <div class="form-group">
-                            <input
-                                type="text"
-                                th:value="${user.name}"
-                                class="form-control"
-                                placeholder="Họ tên"
-                                readonly="readonly"
-                            />
-                        </div>
+            </script>
 
-                        <div class="form-group">
-                            <input
-                                type="text"
-                                th:field="*{address}"
-                                class="form-control"
-                                placeholder="Địa chỉ"
-                                required="required"
-                            />
-                        </div>
-                      
-                        <div class="form-group">
-                            <input
-                                type="tel"
-                                th:field="*{phone}"
-                                class="form-control"
-                                placeholder="Số điện thoại"
-                                required="required"
-                            />
-                        </div>
 
-                        <div class="form-group">
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Ghi chú đơn hàng"
-                                
-                            />
-                        </div>
-                       </div>
+            <div class="col-lg-12" th:if="${totalCartItems!=0}">
+                <div class="account-card mb-0">
 
-                       <div class="col-lg-4">
-                       <div >
-	                        <div class="form-group">
-	                            <div class="account-title">
-	                                <h4>Chọn phương thức thanh toán</h4>
-	                              </div>
-	                            <div class="radio">
-	                                <label style="color: #119744"><input type="radio" value="cod" name="checkOut" checked> <strong><em>Ship COD ( Thanh toán khi nhận hàng )</em></strong></label>
-	                            </div>
-			                         <a href="javascript:void(0);">
-											<img src="/images/payment/jpg/01.jpg" alt="payment" />
-									</a>
-	                            <div class="radio">
-	                                <label style="color: #119744"><input type="radio" value="paypal" name="checkOut"> <strong><em>Thanh Toán Với Paypal</em></strong></label>
-	                            </div>
+                    <div class="account-content">
+                        <form class="user-form row" th:action="@{/checkout}" th:object="${order}" method="post">
+                            <div class="col-lg-8">
+                                <div class="account-title">
+                                    <h4>Thông tin nhận hàng</h4>
+                                </div>
+                                <div class="form-group">
+                                    <input
+                                            type="email"
+                                            th:value="${user.email}"
+                                            class="form-control"
+                                            placeholder="Email"
+                                            readonly="readonly"
+                                    />
+                                </div>
 
-	                        </div>
-	                        <div class="checkout-proced">
-	                            <button type="submit" class="btn btn-inline">Đặt hàng</button>
-	                        </div>
-                     </div>
-                       </div>
-                    </form>
-              </div>
-              
+                                <div class="form-group">
+                                    <input
+                                            type="text"
+                                            th:value="${user.name}"
+                                            class="form-control"
+                                            placeholder="Họ tên"
+                                            readonly="readonly"
+                                    />
+                                </div>
+                                <div class="form-row">
+                                    <!-- Dropdown Tỉnh/ Thành phố -->
+                                    <div class="form-group col-md-4">
+                                        <select id="province" name="province" class="form-control" required>
+                                            <option>Chọn Tỉnh/ Thành phố</option>
+
+                                        </select>
+                                    </div>
+
+                                    <!-- Dropdown Quận/Huyện -->
+                                    <div class="form-group col-md-4">
+                                        <select id="district" name="district" class="form-control" disabled required>
+                                            <option>Chọn Quận/ Huyện</option>
+                                            <!-- Lặp qua danh sách huyện -->
+
+                                        </select>
+                                    </div>
+
+                                    <!-- Dropdown Xã/ Phường -->
+                                    <div class="form-group col-md-4">
+                                        <select id="ward" name="ward" class="form-control" disabled required>
+                                            <option>Chọn Xã/ Phường</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <script>
+                                    const provinceUrl = "https://api.npoint.io/ac646cb54b295b9555be";
+                                    const districtUrl = "https://api.npoint.io/34608ea16bebc5cffd42";
+                                    const wardUrl = "https://api.npoint.io/dd278dc276e65c68cdf5";
+
+                                    // Lấy và hiển thị các tỉnh
+                                    async function loadProvinces() {
+                                        try {
+                                            const response = await fetch(provinceUrl);
+                                            const provinces = await response.json();
+
+                                            const provinceSelect = document.getElementById("province");
+                                            provinceSelect.innerHTML = '<option value="">Chọn Tỉnh/ Thành phố</option>'; // Reset dropdown
+
+                                            provinces.forEach(province => {
+                                                const option = document.createElement("option");
+                                                option.value = province.Name; // Đặt value là Name để lưu vào DB
+                                                option.textContent = province.Name; // Hiển thị Name trong dropdown
+                                                option.setAttribute("data-id", province.Id); // Lưu Id vào data-id
+                                                provinceSelect.appendChild(option);
+                                            });
+                                        } catch (error) {
+                                            console.error("Error loading provinces:", error);
+                                        }
+                                    }
+
+                                    // Lấy và hiển thị các huyện theo tỉnh
+                                    async function loadDistricts(provinceId) {
+                                        try {
+                                            const response = await fetch(districtUrl);
+                                            const districts = await response.json();
+
+                                            const districtSelect = document.getElementById("district");
+                                            districtSelect.innerHTML = '<option value="">Chọn Huyện</option>'; // Reset dropdown
+
+                                            districts.filter(district => district.ProvinceId === provinceId)
+                                                .forEach(district => {
+                                                    const option = document.createElement("option");
+                                                    option.value = district.Name; // Đặt value là Name để lưu vào DB
+                                                    option.textContent = district.Name; // Hiển thị Name trong dropdown
+                                                    option.setAttribute("data-id", district.Id); // Lưu Id vào data-id
+                                                    districtSelect.appendChild(option);
+                                                });
+                                            districtSelect.disabled = false;
+                                            document.getElementById("ward").disabled = true; // Reset dropdown xã/phường
+                                            document.getElementById("ward").innerHTML = '<option value="">Chọn Xã</option>';
+                                        } catch (error) {
+                                            console.error("Error loading districts:", error);
+                                        }
+                                    }
+
+                                    // Lấy và hiển thị các xã/phường theo huyện
+                                    async function loadWards(districtId) {
+                                        try {
+                                            const response = await fetch(wardUrl);
+                                            const wards = await response.json();
+
+                                            const wardSelect = document.getElementById("ward");
+                                            wardSelect.innerHTML = '<option value="">Chọn Xã</option>'; // Reset dropdown
+
+                                            wards.filter(ward => ward.DistrictId === districtId)
+                                                .forEach(ward => {
+                                                    const option = document.createElement("option");
+                                                    option.value = ward.Name; // Đặt value là Name để lưu vào DB
+                                                    option.textContent = ward.Name; // Hiển thị Name trong dropdown
+                                                    option.setAttribute("data-id", ward.Id); // Lưu Id vào data-id
+                                                    wardSelect.appendChild(option);
+                                                });
+                                            wardSelect.disabled = false;
+                                        } catch (error) {
+                                            console.error("Error loading wards:", error);
+                                        }
+                                    }
+
+                                    // Xử lý sự kiện khi người dùng chọn tỉnh
+                                    document.getElementById("province").addEventListener("change", function () {
+                                        const selectedOption = this.options[this.selectedIndex];
+                                        const provinceId = selectedOption.getAttribute("data-id"); // Lấy Id từ data-id
+                                        const provinceName = this.value; // Lấy Name từ value
+                                        console.log("Selected Province:", { provinceId, provinceName });
+
+                                        if (provinceId) {
+                                            loadDistricts(parseInt(provinceId)); // Load huyện khi chọn tỉnh
+                                        } else {
+                                            // Nếu không chọn tỉnh, reset huyện và xã
+                                            document.getElementById("district").disabled = true;
+                                            document.getElementById("district").innerHTML = '<option value="">Chọn Huyện</option>';
+                                            document.getElementById("ward").disabled = true;
+                                            document.getElementById("ward").innerHTML = '<option value="">Chọn Xã</option>';
+                                        }
+                                    });
+
+                                    // Xử lý sự kiện khi người dùng chọn huyện
+                                    document.getElementById("district").addEventListener("change", function () {
+                                        const selectedOption = this.options[this.selectedIndex];
+                                        const districtId = selectedOption.getAttribute("data-id"); // Lấy Id từ data-id
+                                        const districtName = this.value; // Lấy Name từ value
+                                        console.log("Selected District:", { districtId, districtName });
+
+                                        if (districtId) {
+                                            loadWards(parseInt(districtId)); // Load xã/phường khi chọn huyện
+                                        } else {
+                                            // Nếu không chọn huyện, reset xã/phường
+                                            document.getElementById("ward").disabled = true;
+                                            document.getElementById("ward").innerHTML = '<option value="">Chọn Xã</option>';
+                                        }
+                                    });
+
+                                    // Load tỉnh khi trang web tải
+                                    window.onload = loadProvinces;
+                                </script>
+
+                                <div class="form-group">
+                                    <input
+                                            type="text"
+                                            th:field="*{address}"
+                                            class="form-control"
+                                            placeholder="Số nhà"
+                                            required="required"
+                                    />
+                                </div>
+
+                                <div class="form-group">
+                                    <input
+                                            type="tel"
+                                            th:field="*{phone}"
+                                            class="form-control"
+                                            placeholder="Số điện thoại"
+                                            required="required"
+                                    />
+                                </div>
+
+                                <div class="form-group">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            placeholder="Ghi chú đơn hàng"
+
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div >
+                                    <div class="form-group">
+                                        <div class="account-title">
+                                            <h4>Chọn phương thức thanh toán</h4>
+                                        </div>
+                                        <div class="radio">
+                                            <label style="color: #119744"><input type="radio" value="cod" name="checkOut" checked> <strong><em>Ship COD ( Thanh toán khi nhận hàng )</em></strong></label>
+                                        </div>
+                                        <a href="javascript:void(0);">
+                                            <img src="/images/payment/jpg/01.jpg" alt="payment" />
+                                        </a>
+                                        <div class="radio">
+                                            <label style="color: #119744"><input type="radio" value="paypal" name="checkOut"> <strong><em>Thanh Toán Với Paypal</em></strong></label>
+                                        </div>
+
+                                    </div>
+                                    <div class="checkout-proced">
+                                        <button type="submit" class="btn btn-inline">Đặt hàng</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </section>
-    
-    <section
-      class="news-part"
-      style="background: url(images/newsletter.jpg) no-repeat center">
-      <div class="container">
+    </div>
+</section>
+
+<section
+        class="news-part"
+        style="background: url(images/newsletter.jpg) no-repeat center">
+    <div class="container">
         <div class="row align-items-center">
-          <div class="col-md-5 col-lg-6 col-xl-7">
-            <div class="news-text">
-              <h2>Nhận chiết khấu 20% cho người đăng ký</h2>
-              <p>Nhận chiết khấu 20% cho người đăng ký</p>
+            <div class="col-md-5 col-lg-6 col-xl-7">
+                <div class="news-text">
+                    <h2>Nhận chiết khấu 20% cho người đăng ký</h2>
+                    <p>Nhận chiết khấu 20% cho người đăng ký</p>
+                </div>
             </div>
-          </div>
-          <div class="col-md-7 col-lg-6 col-xl-5">
-            <form class="news-form">
-              <input
-                type="text"
-                placeholder="Enter Your Email Address"
-              /><button>
-                <span><i class="icofont-ui-email"></i>Subscribe</span>
-              </button>
-            </form>
-          </div>
+            <div class="col-md-7 col-lg-6 col-xl-5">
+                <form class="news-form">
+                    <input
+                            type="text"
+                            placeholder="Enter Your Email Address"
+                    /><button>
+                    <span><i class="icofont-ui-email"></i>Subscribe</span>
+                </button>
+                </form>
+            </div>
         </div>
-      </div>
-    </section>
-    <section class="intro-part">
-      <div class="container">
+    </div>
+</section>
+<section class="intro-part">
+    <div class="container">
         <div class="row intro-content">
-          <div class="col-sm-6 col-lg-3">
-            <div class="intro-wrap">
-              <div class="intro-icon"><i class="fas fa-truck"></i></div>
-              <div class="intro-content">
-                <h5>Giao Hàng Tận Nhà Miễn Phí</h5>
-                <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
-              </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="intro-wrap">
+                    <div class="intro-icon"><i class="fas fa-truck"></i></div>
+                    <div class="intro-content">
+                        <h5>Giao Hàng Tận Nhà Miễn Phí</h5>
+                        <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="col-sm-6 col-lg-3">
-            <div class="intro-wrap">
-              <div class="intro-icon"><i class="fas fa-sync-alt"></i></div>
-              <div class="intro-content">
-                <h5>Chính Sách Hoàn Trả</h5>
-                <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
-              </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="intro-wrap">
+                    <div class="intro-icon"><i class="fas fa-sync-alt"></i></div>
+                    <div class="intro-content">
+                        <h5>Chính Sách Hoàn Trả</h5>
+                        <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="col-sm-6 col-lg-3">
-            <div class="intro-wrap">
-              <div class="intro-icon"><i class="fas fa-headset"></i></div>
-              <div class="intro-content">
-                <h5>Hệ Thống Hỗ Trợ</h5>
-                <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
-              </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="intro-wrap">
+                    <div class="intro-icon"><i class="fas fa-headset"></i></div>
+                    <div class="intro-content">
+                        <h5>Hệ Thống Hỗ Trợ</h5>
+                        <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="col-sm-6 col-lg-3">
-            <div class="intro-wrap">
-              <div class="intro-icon"><i class="fas fa-lock"></i></div>
-              <div class="intro-content">
-                <h5>Cách Thanh Toán An Toàn</h5>
-                <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
-              </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="intro-wrap">
+                    <div class="intro-icon"><i class="fas fa-lock"></i></div>
+                    <div class="intro-content">
+                        <h5>Cách Thanh Toán An Toàn</h5>
+                        <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </section>
-    
-    	<script>
-		function showConfigModalDialog(id, name) {
-			$('#productName').text(name);
-			$('#yesOption').attr('href', '/remove/'+id);
-			$('#configmationId').modal('show');
-		}
-		</script>
-		
-		<!-- Modal -->
-		<div class="modal" id="configmationId">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content">
-					<button class="modal-close" data-bs-dismiss="modal">
-		            	<i class="icofont-close"></i>
-		          	</button>
-					<div class="modal-form">
-						<h5 class="modal-title">Xác nhận</h5>
-						<div class="modal-body">
-						<p>
-							Bạn có muốn xoá sản phẩm " <span style="color: #119744" id="productName"></span> "
-							ra khỏi giỏ hàng không ?
-						</p>
-					</div>
-					<div class="modal-footer">
-						<a id="yesOption" type="button" class="btn btn-success">Có</a>
-					</div>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-    
-    
-    <!--************************************
-				Footer Start
-		*************************************-->
-		<footer th:replace="~{/web/fragments/footer :: footer}"></footer>
-				
-		<!--************************************
-				Footer End
-		*************************************-->
-		
-		
-    <script src="vendor/bootstrap/jquery-1.12.4.min.js"></script>
-    <script src="vendor/bootstrap/popper.min.js"></script>
-    <script src="vendor/bootstrap/bootstrap.min.js"></script>
-    <script src="vendor/countdown/countdown.min.js"></script>
-    <script src="vendor/niceselect/nice-select.min.js"></script>
-    <script src="vendor/slickslider/slick.min.js"></script>
-    <script src="vendor/venobox/venobox.min.js"></script>
-    <script src="js/nice-select.js"></script>
-    <script src="js/countdown.js"></script>
-    <script src="js/accordion.js"></script>
-    <script src="js/venobox.js"></script>
-    <script src="js/slick.js"></script>
-    <script src="js/main.js"></script>
-    
-    
-  </body>
+    </div>
+</section>
+
+<script>
+    function showConfigModalDialog(id, name) {
+        $('#productName').text(name);
+        $('#yesOption').attr('href', '/remove/'+id);
+        $('#configmationId').modal('show');
+    }
+</script>
+
+<!-- Modal -->
+<div class="modal" id="configmationId">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <button class="modal-close" data-bs-dismiss="modal">
+                <i class="icofont-close"></i>
+            </button>
+            <div class="modal-form">
+                <h5 class="modal-title">Xác nhận</h5>
+                <div class="modal-body">
+                    <p>
+                        Bạn có muốn xoá sản phẩm " <span style="color: #119744" id="productName"></span> "
+                        ra khỏi giỏ hàng không ?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <a id="yesOption" type="button" class="btn btn-success">Có</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!--************************************
+            Footer Start
+    *************************************-->
+<footer th:replace="~{/web/fragments/footer :: footer}"></footer>
+
+<!--************************************
+        Footer End
+*************************************-->
+
+<script src="vendor/bootstrap/jquery-1.12.4.min.js"></script>
+<script src="vendor/bootstrap/popper.min.js"></script>
+<script src="vendor/bootstrap/bootstrap.min.js"></script>
+<script src="vendor/countdown/countdown.min.js"></script>
+<script src="vendor/niceselect/nice-select.min.js"></script>
+<script src="vendor/slickslider/slick.min.js"></script>
+<script src="vendor/venobox/venobox.min.js"></script>
+<script src="js/nice-select.js"></script>
+<script src="js/countdown.js"></script>
+<script src="js/accordion.js"></script>
+<script src="js/venobox.js"></script>
+<script src="js/slick.js"></script>
+<script src="js/main.js"></script>
+
+
+</body>
 </html>
