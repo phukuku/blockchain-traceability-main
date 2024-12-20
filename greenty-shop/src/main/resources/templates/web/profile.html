@@ -113,6 +113,7 @@
                                   <th scope="col">Mã Order</th>
                                   <th scope="col">Ngày đặt</th>
                                   <th scope="col">Tổng tiền</th>
+                                    <th scope="col">Thanh toán</th>
                                   <th scope="col">Địa chỉ</th>
                                   <th scope="col">Số điện thoại</th>
                                   <th scope="col">Trạng thái</th>
@@ -124,6 +125,7 @@
                                   <td class="table-serial"><h6>[[${item.orderId}]]</h6></td>
                                   <td class="table-name"><h6>[[${item.orderDate}]]</h6></td>
                                   <td class="table-price"><h6>[[${#numbers.formatDecimal(item.amount, 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]</h6></td>
+                                    <td class="table-name"><h6>[[${item.payment}]]</h6></td>
                                   <td class="table-address"><h6>[[${item.address}]], [[${item.ward}]], [[${item.district}]],[[${item.province}]]</h6></td>
                                   <td class="table-brand"><h6>[[${item.phone}]]</h6></td>
                                   <td class="table-status">
@@ -141,7 +143,7 @@
 									
 									<div th:if="${item.status==2}">
 										<a style="cursor: pointer; color: #119744;">
-											<i class="fa fa-check-circle"> Đã thanh toán</i>
+											<i class="fa fa-check-circle"> Giao hàng thành công</i>
 										</a>
 									</div>
 									

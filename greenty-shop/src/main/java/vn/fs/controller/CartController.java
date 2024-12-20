@@ -201,6 +201,7 @@ public class CartController extends CommomController {
 		Date date = new Date();
 		order.setOrderDate(date);
 		order.setStatus(0);
+		order.setPayment("Thanh toán khi nhận hàng");
 		order.getOrderId();
 		order.setAmount(totalPrice);
 		order.setUser(user);
@@ -252,6 +253,7 @@ public class CartController extends CommomController {
 				Date date = new Date();
 				orderFinal.setOrderDate(date);
 				orderFinal.setStatus(0);
+				orderFinal.setPayment("Đã Thanh toán");
 				orderFinal.getOrderId();
 				orderFinal.setUser(user);
 				orderFinal.setAmount(totalPrice);

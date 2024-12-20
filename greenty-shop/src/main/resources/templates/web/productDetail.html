@@ -51,150 +51,153 @@
         </ol>
       </div>
     </section>
-    
-    <section class="inner-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="details-gallery">
-              <div class="details-label-group">
-                <label class="details-label new">new</label>
-                <label class="details-label off">- [[${product.discount + '%'}]]</label>
-              </div>
-              <ul class="details-preview">
-                <li><img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product"/></li>
-              </ul>
-<!--               <ul class="details-thumb"> -->
-<!--                 <li> -->
-<!--                 	<img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product" /> -->
-<!--                 </li> -->
-<!--               </ul> -->
-            </div>
-          </div>
-          <div class="col-lg-6">
-            
-            <div class="details-content">
-				<div class="details-info-container">
-					<div class="left-info">
-						<h3 class="details-name">
-							<a href="#">[[${product.productName}]]</a>
+
+	<section class="inner-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="details-gallery">
+						<div class="details-label-group">
+							<label class="details-label new">new</label>
+							<label class="details-label off">- [[${product.discount + '%'}]]</label>
+						</div>
+						<ul class="details-preview">
+							<li><img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product"/></li>
+						</ul>
+						<!--               <ul class="details-thumb"> -->
+						<!--                 <li> -->
+						<!--                 	<img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product" /> -->
+						<!--                 </li> -->
+						<!--               </ul> -->
+					</div>
+				</div>
+				<div class="col-lg-6">
+
+					<div class="details-content">
+						<div class="details-info-container">
+							<div class="left-info">
+								<h3 class="details-name">
+									<a href="#">[[${product.productName}]]</a>
+								</h3>
+								<div class="details-meta">
+									<p>Mã sản phẩm:<span>[[${product.productId}]]</span></p>
+								</div>
+								<div class="details-meta">
+									<p>Thể loại:<a href="#">[[${product.category.categoryName}]]</a></p>
+								</div>
+								<div class="details-meta">
+									<p>Số lượng hàng:<a href="#">[[${product.quantity}]]</a></p>
+								</div>
+							</div>
+							<div id="qrcode"></div>
+						</div>
+						<div class="details-rating">
+							<i class="active icofont-star"></i
+							><i class="active icofont-star"></i
+						><i class="active icofont-star"></i
+						><i class="active icofont-star"></i>
+							<i class="icofont-star"></i>
+
+						</div>
+						<h3 class="details-price">
+							<del>[[${#numbers.formatDecimal(product.price, 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]</del>
+							<span>[[${#numbers.formatDecimal(product.price - (product.price * product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]<small>/kg</small></span>
 						</h3>
-						<div class="details-meta">
-							<p>Mã sản phẩm:<span>[[${product.productId}]]</span></p>
+						<p class="details-desc">
+						<p th:text="${product.description}" style="white-space: pre-line;"></p>
+						</p>
+						<div class="details-list-group">
+							<label class="details-list-title">Xem thêm:</label>
+							<ul class="details-tag-list">
+								<li th:each="item : ${categoryList}">
+									<a th:href="@{/productByCategory(id=${item.categoryId})}">[[${item.categoryName}]]</a>
+								</li>
+							</ul>
 						</div>
-						<div class="details-meta">
-							<p>Thể loại:<a href="#">[[${product.category.categoryName}]]</a></p>
+						<div class="details-list-group">
+							<label class="details-list-title">Share:</label>
+							<ul class="details-share-list">
+								<li>
+									<a href="javascript:void(0);" class="icofont-facebook" title="Facebook"></a>
+								</li>
+								<li>
+									<a href="javascript:void(0);" class="icofont-twitter" title="Twitter"></a>
+								</li>
+								<li>
+									<a href="javascript:void(0);" class="icofont-linkedin" title="Linkedin"></a>
+								</li>
+								<li>
+									<a href="javascript:void(0);" class="icofont-instagram" title="Instagram"></a>
+								</li>
+							</ul>
 						</div>
-						<div class="details-meta">
-							<p>Số lượng hàng:<a href="#">[[${product.quantity}]]</a></p>
+
+
+						<th:block th:if="${product.quantity != 0}">
+							<div class="details-add-group">
+								<a class="product-add1" style="background-color: #119744" title="Thêm giỏ hàng"
+								   th:if="${product.quantity > 0}"
+								   th:href="@{/addToCart(productId=${product.productId})}">
+									<i style="color: white" class="fas fa-shopping-basket"></i>
+									<span style="color: white">Thêm giỏ hàng</span>
+								</a>
+							</div>
+						</th:block>
+
+						<th:block th:if="${product.quantity == 0}">
+							<div class="details-add-group">
+								<a class="product-add1" style="background-color: #cacaca">
+									<span style="color: white">Hết hàng</span>
+								</a>
+							</div>
+						</th:block>
+
+						<!--               <div class="details-action-group"> -->
+						<!--                 <a class="details-wish" href="javascript:void(0);" title="Yêu thích"> -->
+						<!--                 <i class="icofont-heart"></i> -->
+						<!--                 <span>Thêm yêu thích</span></a> -->
+						<!--               </div> -->
+
+						<th:block th:if="${user.email != null}">
+							<div class="details-action-group">
+								<a class="details-wish"
+								   th:if="${product.favorite} == false"
+								   title="Yêu thích"
+								   th:href="@{/doFavorite(id=${product.productId})}">
+									<i class="icofont-heart"></i>
+									<span>Thêm yêu thíchh</span>
+								</a>
+
+							</div>
+						</th:block>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="product-details-frame">
+						<h3 class="frame-title">Mô tả sản phẩm</h3>
+						<div class="tab-descrip">
+							<p>
+							<p th:text="${product.description}" style="white-space: pre-line;"></p>                </p>
 						</div>
 					</div>
-					<div id="qrcode"></div>
+
 				</div>
-              <div class="details-rating">
-                <i class="active icofont-star"></i
-                ><i class="active icofont-star"></i
-                ><i class="active icofont-star"></i
-                ><i class="active icofont-star"></i>
-                <i class="icofont-star"></i>
-                
-              </div>
-              <h3 class="details-price">
-                <del>[[${#numbers.formatDecimal(product.price, 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]</del>
-                <span>[[${#numbers.formatDecimal(product.price - (product.price * product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]<small>/kg</small></span>
-              </h3>
-              <p class="details-desc">
-				<p th:text="${product.description}" style="white-space: pre-line;"></p>
-              </p>
-              <div class="details-list-group">
-                <label class="details-list-title">Xem thêm:</label>
-                <ul class="details-tag-list">
-                  <li th:each="item : ${categoryList}">
-                  	<a th:href="@{/productByCategory(id=${item.categoryId})}">[[${item.categoryName}]]</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="details-list-group">
-                <label class="details-list-title">Share:</label>
-                <ul class="details-share-list">
-                  <li>
-                    <a href="javascript:void(0);" class="icofont-facebook" title="Facebook"></a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);" class="icofont-twitter" title="Twitter"></a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);" class="icofont-linkedin" title="Linkedin"></a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);" class="icofont-instagram" title="Instagram"></a>
-                  </li>
-                </ul>
-              </div>
+			</div>
+		</div>
+	</section>
 
-				 
-				 <th:block th:if="${product.quantity != 0}">
-				  <div class="details-add-group">
-	                <a class="product-add1" style="background-color: #119744" title="Thêm giỏ hàng" th:if="${product.quantity > 0}" th:href="@{/addToCart(productId=${product.productId})}">
-	                  <i style="color: white" class="fas fa-shopping-basket"></i>
-	                  <span style="color: white">Thêm giỏ hàng</span>
-	                </a>              
-	              </div>          	                               
-				 </th:block>
-				 
-				 <th:block th:if="${product.quantity == 0}">
-				   <div class="details-add-group">
-	                <a class="product-add1" style="background-color: #cacaca">
-	                  <span style="color: white">Hết hàng</span>
-	                </a>              
-	              </div>   	       	                               
-				 </th:block>
-				 
-<!--               <div class="details-action-group"> -->
-<!--                 <a class="details-wish" href="javascript:void(0);" title="Yêu thích"> -->
-<!--                 <i class="icofont-heart"></i> -->
-<!--                 <span>Thêm yêu thích</span></a> -->
-<!--               </div> -->
-              
-               <th:block th:if="${user.email != null}">
-	                <div class="details-action-group">
-	               <a "details-wish" th:if="${product.favorite} == false"
-	                        title="Yêu thích"
-	                        th:href="@{/doFavorite(id=${product.productId})}" >               
-	                         <i class="icofont-heart"></i>
-	                        <span>Thêm yêu thích</span>
-	                 </a>
-	              </div>                                       
-                 </th:block>
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="inner-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="product-details-frame">
-              <h3 class="frame-title">Mô tả sản phẩm</h3>
-              <div class="tab-descrip">
-                <p>
-				  <p th:text="${product.description}" style="white-space: pre-line;"></p>                </p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </section>
- 
-    <section class="section newitem-part">
+	<section class="section newitem-part">
 		<div class="container">
 			<div class="row">
 				<div class="col">
 					<div class="section-heading">
-						<h2>Sản phẩm cùng loại</h2>
+						<h2>Sản phẩm đề xuất</h2>
 					</div>
 				</div>
 			</div>
@@ -343,7 +346,7 @@
 						</div>
 						<div class="intro-content">
 							<h5>Giao Hàng Tận Nhà Miễn Phí</h5>
-							<p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
+							<p>Miễn phí giao hàng trong bán kính 10km, các đơn hàng xa hơn theo đơn giá công ty vận chuyển. Miễn phí giao hàng với các đơn lớn</p>
 						</div>
 					</div>
 				</div>
@@ -354,7 +357,7 @@
 						</div>
 						<div class="intro-content">
 							<h5>Chính Sách Hoàn Trả</h5>
-							<p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
+							<p>Nếu sản phẩm không đúng như mô tả, hư hỏng hoặc gặp lỗi từ phía nhà cung cấp, bạn hoàn toàn có thể yêu cầu hoàn trả trong vòng 7 ngày kể từ khi nhận hàng.</p>
 						</div>
 					</div>
 				</div>
@@ -365,7 +368,7 @@
 						</div>
 						<div class="intro-content">
 							<h5>Hệ Thống Hỗ Trợ</h5>
-							<p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
+							<p>Đội ngũ hỗ trợ khách hàng luôn sẵn sàng 24/7 để giải đáp mọi thắc mắc và xử lý vấn đề của bạn. Liên hệ qua hotline, email hoặc chat trực tuyến để được phục vụ tốt nhất.</p>
 						</div>
 					</div>
 				</div>
@@ -376,7 +379,7 @@
 						</div>
 						<div class="intro-content">
 							<h5>Cách Thanh Toán An Toàn</h5>
-							<p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
+							<p>Mua sắm không lo âu với các phương thức thanh toán an toàn như chuyển khoản, thanh toán qua ví điện tử hoặc thanh toán khi nhận hàng (COD).</p>
 						</div>
 					</div>
 				</div>

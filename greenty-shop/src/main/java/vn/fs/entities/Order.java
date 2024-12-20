@@ -37,6 +37,7 @@ public class Order implements Serializable {
 	private String address;
 	private String phone;
 	private int status;
+	private String payment ;
 	private String province ;
 	private String district;
 	private String ward;
