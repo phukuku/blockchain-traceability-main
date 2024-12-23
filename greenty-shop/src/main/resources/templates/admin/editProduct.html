@@ -178,6 +178,19 @@
 													<textarea th:field="*{description}" id="description" class="form-control" placeholder="Mô tả sản phẩm"></textarea>
 												</div>
 											</div>
+
+											<div class="col-md-6">
+												<div class="form-group form-group-default">
+													<label>Trạng thái</label>
+													<input type="hidden">
+													<select class="form-control" name="status" th:field="*{status}" id="statusId">
+														<!-- Nếu trạng thái = 1, hiển thị "Tắt", còn lại hiển thị "Bật" -->
+														<option th:value="1" th:selected="${product.status == 1}">Tắt</option>
+														<option th:value="0" th:selected="${product.status != 1 and product.status != null}">Bật</option>
+													</select>
+												</div>
+											</div>
+
 										</div>
 										<div class="modal-footer no-bd">
 											<button type="submit" id="" class="btn btn-primary">Cập nhật</button>
@@ -219,8 +232,8 @@
 			</div>
 		</footer>
 	</div>
-	
-	
+
+
 	
 
 	</div>

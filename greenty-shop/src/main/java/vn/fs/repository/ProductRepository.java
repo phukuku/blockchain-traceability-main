@@ -27,8 +27,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	public List<Product> listProductNew10();
 
 	// Search Product
-	@Query(value = "SELECT * FROM products WHERE product_name LIKE %?1%" , nativeQuery = true)
+	@Query(value = "SELECT * FROM products WHERE product_name LIKE %?1% AND (status != 1 OR status IS NULL)", nativeQuery = true)
 	public List<Product> searchProduct(String productName);
+
 	
 	// count quantity by product
 	@Query(value = "SELECT c.category_id,c.category_name,\r\n"
@@ -53,5 +54,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	Optional<Product> findByTxnHash(String hash);
 
 	Optional<Product> findById(long id);
+
+	List<Product> findByStatusNot(long status);
 
 }

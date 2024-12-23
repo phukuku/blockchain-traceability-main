@@ -38,7 +38,7 @@ public class Product implements Serializable {
 	private String description;
 	@Temporal(TemporalType.DATE)
 	private Date enteredDate;
-	private Boolean status;
+	private Long status;
 	public boolean favorite;
 	private String txnHash;
 	@Temporal(TemporalType.DATE)

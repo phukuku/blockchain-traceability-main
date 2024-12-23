@@ -84,7 +84,7 @@
 						</div>
                         <div class="details-meta">
                             <p>Transaction hash:
-                                <a id="txnLink" th:href="|https://sepolia.etherscan.io/tx/${product.txnHash}#eventlog|">
+                                <a id="txnLink" th:href="|https://sepolia.etherscan.io/tx/${product.txnHash}|">
                                     <span id="txnHash">[[${product.txnHash}]]</span>
                             </a>
                         </div>
@@ -117,7 +117,7 @@
                 <del>[[${#numbers.formatDecimal(product.price, 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]</del>
                 <span>[[${#numbers.formatDecimal(product.price - (product.price * product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]<small>/kg</small></span>
               </h3>
-              <p class="details-desc">
+              <p class="details-desc"style="white-space: pre-line;">
                 [[${product.description}]]
               </p>
               <div class="details-list-group">
@@ -175,7 +175,7 @@
             <div class="product-details-frame">
               <h3 class="frame-title">Mô tả sản phẩm</h3>
               <div class="tab-descrip">
-                <p>
+                <p style="white-space: pre-line;">
                   [[${product.description}]]
                 </p>
               </div>
