@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableFeignClients(basePackages = "vn.fs.client")
 @ImportAutoConfiguration({FeignAutoConfiguration.class})
-public class GreenyShopApplication {
+public class  GreenyShopApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(GreenyShopApplication.class, args);
