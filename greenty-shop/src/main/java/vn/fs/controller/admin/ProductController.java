@@ -217,7 +217,8 @@ public class ProductController {
 					.productId(product.getProductId().intValue())
 					.productName(product.getProductName()).manufacturer(product.getProducer())
 					.categoryId(product.getCategory().getCategoryId().toString())
-					.productionDate(Instant.now().toEpochMilli()/1000)
+//					.productionDate(Instant.now().toEpochMilli()/1000)
+					.productionDate(product.getMfgDate().getTime()/1000)
 					.build();
 			return Optional
 					.ofNullable(
